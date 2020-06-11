@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    {% for card in cards %}
+    <form method="POST">
+        {% csrf_token %}
+        <!-- <div id="imagewrap" class="item" style="position: relative;">
+            <img src="{{ card.image.url }}" download width='50%' height='60%' />
+            <div style="position: absolute; top: 50%;left: 35%; color: rgb(243, 241, 241);">
+                <h1>We are Hiring</h1>
+                <h3>{{ card.title }}</h3>
+                <h3>Experience: {{ card.experience }} Yrs</h3>
+                <h3>Qualification: {{ card.qualification }} </h3>
+                <h3>Location: {{ card.location }} </h3>
+                <h3>Salary: {{ card.salary }} </h3>
+            </div>
+        </div> -->
+
+        <!-- <p>DOM-rendered</p> -->
+        <!-- <p>&nbsp;</p> -->
+        <div id="imagewrap" class="wrap" style="position: relative;">
+            <img src="{{ card.image.url }}" download width='100%'/>
+            <div style="position: absolute; top: 65%;left: 68%; color: rgb(243, 241, 241);">
+                <h1>We are Hiring</h1>
+                <h3>{{ card.title }}</h3>
+                <h3>Experience: {{ card.experience }} Yrs</h3>
+                <h3>Qualification: {{ card.qualification }} </h3>
+                <h3>Location: {{ card.location }} </h3>
+                <h3>Salary: {{ card.salary }} </h3>
+            </div>
+        </div><br>
+        <!-- <div id="canvasWrapper" class="outer"> -->
+        <!-- <p>Canvas-rendered (try right-click, save image as!)</p> -->
+        <a class="btn btn-primary" id="downloadLink" download="cat.png">Click Here to Download!</a>
+        <!-- </div> -->
+    </form>
+    {% endfor %}
+
+    <script>
+        window.onload = function () {
+            html2canvas(document.getElementById("imagewrap"), {
+                onrendered: function (canvas) {
+                    // canvas.className = "html2canvas";
+                    // document.getElementById("canvasWrapper").appendChild(canvas);
+                    var image = canvas.toDataURL("image/png");
+                    document.getElementById("downloadLink").href = image;
+                },
+            });
+        }
+    </script>
+</body>
+
+</html>
